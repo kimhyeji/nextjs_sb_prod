@@ -36,7 +36,7 @@ export default function ArticleEdit() {
       queryClient.invalidateQueries({ queryKey: ['article', id] })
       router.push(`/article/${id}`)
     },
-    onError: () => {
+    onError: (err: any) => {
       if (err?.response?.status == 401) {
         alert('로그인 후 이용해주세요')
         router.push('/member/login')
