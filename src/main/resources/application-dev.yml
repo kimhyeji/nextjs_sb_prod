@@ -11,10 +11,5 @@ spring:
     url: jdbc:h2:mem:db_dev;MODE=MYSQL
     username: sa
     password:
-#  datasource:
-#    driver-class-name: org.mariadb.jdbc.Driver
-#    url: jdbc:mariadb://127.0.0.1:3306/db_dev
-#    username: root
-#    password:
 custom:
   fileDirPath: /usr/file
