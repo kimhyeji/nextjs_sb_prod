@@ -16,7 +16,7 @@ export default function Login() {
         alert('로그인 되었습니다')
         router.back()
       })
-      .catch((err) => console.log(err))
+      .catch((err) => console.log(err + process.env.NEXT_PUBLIC_API_BASE_URL))
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
