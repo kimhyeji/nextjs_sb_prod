@@ -15,51 +15,30 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
+
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
-                        .requestMatchers(new AntPathRequestMatcher("/**")).permitAll())
                 .cors(cors -> {})
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**").permitAll()
                         .anyRequest().permitAll()
                 )
-                .headers(
-                        headers -> headers
-                                .addHeaderWriter(
-                                        new XFrameOptionsHeaderWriter(
-                                                XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN
-                                        )
+
+                .headers(headers -> headers
+                        .addHeaderWriter(
+                                new XFrameOptionsHeaderWriter(
+                                        XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN
                                 )
+                        )
                 );
-        ;
+
         return http.build();
     }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    public org.springframework.web.cors.CorsConfigurationSource corsConfigurationSource() {
-        var config = new org.springframework.web.cors.CorsConfiguration();
-        config.setAllowedOrigins(
-                java.util.List.of(
-                        "https://hj-yee.shop",
-                        "http://localhost:3000"
-                )
-        );
-        config.setAllowedMethods(
-                java.util.List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")
-        );
-        config.setAllowedHeaders(java.util.List.of("*"));
-        config.setAllowCredentials(true);
-
-        var source = new org.springframework.web.cors.UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", config);
-        return source;
     }
 }
